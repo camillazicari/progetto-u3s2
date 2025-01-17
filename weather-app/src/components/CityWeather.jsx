@@ -556,7 +556,7 @@ const CityWeather = () => {
           xs={4}
           className="border rounded-2 text-white textShadow text-center bg-white bg-opacity-50"
         >
-          <h4 className="border-bottom p-2 border-2">DOMANI:</h4>
+          <h4 className="border-bottom p-2 border-2">DOPODOMANI:</h4>
           <ListGroup>
             <ListGroup.Item className="bg-transparent border-0 text-white textShadow fw-bold">
               <p className="m-0 p-0">
