@@ -7,10 +7,24 @@ const MyNav = () => {
 
   const [search, setSearch] = useState("");
 
-  const handleSearch = () => {
-    if (search !== "") {
-      navigate("/cityWeather/" + search);
-      setSearch("");
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=e1f2e9e83e9b22501a7be0bacb2f24d3`;
+
+  const handleSearch = async () => {
+    if (search.trim() === "") return;
+
+    try {
+      const response = await fetch(url);
+
+      if (response.ok) {
+        navigate("/cityWeather/" + search);
+        setSearch("");
+      } else {
+        alert("Città non trovata! Riprova.");
+        setSearch("");
+      }
+    } catch (error) {
+      console.error("Errore durante la verifica della città:", error);
+      alert("Errore di rete. Riprova più tardi.");
     }
   };
 

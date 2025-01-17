@@ -6,6 +6,7 @@ import "bootstrap-icons/font/bootstrap-icons.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MyFooter from "./components/MyFooter";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<WeatherHome />} />
         <Route path="/cityWeather/:citySearch" element={<CityWeather />} />
       </Routes>
+      <MyFooter />
     </BrowserRouter>
   );
 }

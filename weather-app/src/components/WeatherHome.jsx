@@ -26,18 +26,47 @@ const WeatherHome = () => {
     GetRome();
   }, []);
 
+  const sunriseTime = rome.city ? rome.city.sunrise : "undefined";
+  const sunsetTime = rome.city ? rome.city.sunset : "undefined";
+
+  const formatSunrise = () => {
+    const sunriseDate = new Date(sunriseTime * 1000);
+    const hours = sunriseDate.getHours();
+    const minutes = sunriseDate.getMinutes();
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+    return formattedTime;
+  };
+
+  const formatSunset = () => {
+    const sunsetDate = new Date(sunsetTime * 1000);
+    const hours = sunsetDate.getHours();
+    const minutes = sunsetDate.getMinutes();
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+    return formattedTime;
+  };
+
   return (
-    <Container fluid className="sfondo">
+    <Container fluid className="sfondo pb-5">
       <Row>
         <Col>
           <h1 className="display-1 fw-bold m-5 text-white titleShadow text-uppercase ">
             {rome.city ? rome.city.name : "undefined"}
           </h1>
+          <h2 className="fw-bold mx-5 text-white titleShadow">
+            Alba: {formatSunrise()}
+          </h2>
+          <h2 className="fw-bold mx-5 text-white titleShadow">
+            Tramonto: {formatSunset()}
+          </h2>
         </Col>
       </Row>
-      <Row className="mx-5 mb-5">
+      <Row className="mb-5">
         <Col className="d-flex align-items-center">
-          <h3 className="me-3 text-white fw-bold textShadow">
+          <h3 className="mx-5 me-3 text-white fw-bold textShadow">
             <u>Current Weather</u>:
           </h3>
           <h3 className="text-white fw-bolder textShadow text-uppercase">
@@ -62,10 +91,10 @@ const WeatherHome = () => {
           />
         </Col>
       </Row>
-      <Row className="bg-white bg-opacity-50 mx-2">
+      <Row className="mx-2">
         <Col
           xs={4}
-          className="border rounded-2 text-white textShadow text-center"
+          className="border rounded-2 text-white textShadow text-center bg-white bg-opacity-50"
         >
           <h4 className="border-bottom p-2 border-2">OGGI:</h4>
           <ListGroup>
@@ -276,7 +305,7 @@ const WeatherHome = () => {
         </Col>
         <Col
           xs={4}
-          className="border rounded-2 text-white textShadow text-center"
+          className="border rounded-2 text-white textShadow text-center bg-white bg-opacity-50"
         >
           <h4 className="border-bottom p-2 border-2">DOMANI:</h4>
           <ListGroup>
@@ -487,7 +516,7 @@ const WeatherHome = () => {
         </Col>
         <Col
           xs={4}
-          className="border rounded-2 text-white textShadow text-center"
+          className="border rounded-2 text-white textShadow text-center bg-white bg-opacity-50"
         >
           <h4 className="border-bottom p-2 border-2">DOMANI:</h4>
           <ListGroup>

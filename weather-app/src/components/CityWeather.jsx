@@ -7,12 +7,17 @@ const CityWeather = () => {
   const param = useParams();
   console.log("PARAMETRO", param);
 
+  const pixaUrl =
+    "https://pixabay.com/api/?key=48286807-c48be681705a0319ee8581487&q=" +
+    param.citySearch +
+    "&image_type=photo&orientation=vertical";
   const url =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     param.citySearch +
     "&units=metric&appid=e1f2e9e83e9b22501a7be0bacb2f24d3";
 
   const [city, setCity] = useState({});
+  const [foto, setFoto] = useState({});
 
   const GetCity = async () => {
     try {
@@ -29,21 +34,77 @@ const CityWeather = () => {
     }
   };
 
+  const GetPhoto = async () => {
+    try {
+      const response = await fetch(pixaUrl);
+      if (response.ok) {
+        const data = await response.json();
+        console.log("ECCO LA FOTO':", data);
+        setFoto(data);
+      } else {
+        throw new Error("Errore nel recupero dei dati");
+      }
+    } catch {
+      console.log("ERRORE", Error);
+    }
+  };
+
   useEffect(() => {
     GetCity();
+    GetPhoto();
   }, [param]);
+
+  const sunriseTime = city.city ? city.city.sunrise : "undefined";
+  const sunsetTime = city.city ? city.city.sunset : "undefined";
+
+  const formatSunrise = () => {
+    const sunriseDate = new Date(sunriseTime * 1000);
+    const hours = sunriseDate.getHours();
+    const minutes = sunriseDate.getMinutes();
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+    return formattedTime;
+  };
+
+  const formatSunset = () => {
+    const sunsetDate = new Date(sunsetTime * 1000);
+    const hours = sunsetDate.getHours();
+    const minutes = sunsetDate.getMinutes();
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+    return formattedTime;
+  };
+
+  const style = {
+    backgroundImage: `url(${
+      foto.hits && foto.hits.length > 0
+        ? foto.hits[0].webformatURL
+        : "https://i.pinimg.com/originals/e6/84/d2/e684d28d15c0cd42069bec09ea7d2a95.jpg"
+    })`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  };
+
   return (
-    <Container fluid className="sfondoSearch">
+    <Container fluid className="pb-5" style={style}>
       <Row>
         <Col>
-          <h1 className="display-1 fw-bold m-5 text-white titleShadow text-uppercase ">
+          <h1 className="display-1 fw-bold m-5 text-white titleShadow text-uppercase">
             {city.city ? city.city.name : "undefined"}
           </h1>
+          <h2 className="fw-bold mx-5 text-white titleShadow">
+            Alba: {formatSunrise()}
+          </h2>
+          <h2 className="fw-bold mx-5 text-white titleShadow">
+            Tramonto: {formatSunset()}
+          </h2>
         </Col>
       </Row>
-      <Row className="mx-5 mb-5">
+      <Row className="mb-5">
         <Col className="d-flex align-items-center">
-          <h3 className="me-3 text-white fw-bold textShadow">
+          <h3 className="me-3 text-white fw-bold textShadow mx-5">
             <u>Current Weather</u>:
           </h3>
           <h3 className="text-white fw-bolder textShadow text-uppercase">
@@ -68,10 +129,10 @@ const CityWeather = () => {
           />
         </Col>
       </Row>
-      <Row className="bg-white bg-opacity-50 mx-2">
+      <Row className="mx-2">
         <Col
           xs={4}
-          className="border rounded-2 text-white textShadow text-center"
+          className="border rounded-2 text-white textShadow text-center bg-white bg-opacity-50"
         >
           <h4 className="border-bottom p-2 border-2">OGGI:</h4>
           <ListGroup>
@@ -282,7 +343,7 @@ const CityWeather = () => {
         </Col>
         <Col
           xs={4}
-          className="border rounded-2 text-white textShadow text-center"
+          className="border rounded-2 text-white textShadow text-center bg-white bg-opacity-50"
         >
           <h4 className="border-bottom p-2 border-2">DOMANI:</h4>
           <ListGroup>
@@ -493,7 +554,7 @@ const CityWeather = () => {
         </Col>
         <Col
           xs={4}
-          className="border rounded-2 text-white textShadow text-center"
+          className="border rounded-2 text-white textShadow text-center bg-white bg-opacity-50"
         >
           <h4 className="border-bottom p-2 border-2">DOMANI:</h4>
           <ListGroup>
