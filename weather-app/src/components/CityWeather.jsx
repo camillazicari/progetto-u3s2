@@ -31,7 +31,7 @@ const CityWeather = () => {
 
   useEffect(() => {
     GetCity();
-  }, []);
+  }, [param]);
   return (
     <Container fluid className="sfondoSearch">
       <Row>
