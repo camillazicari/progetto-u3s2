@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { Container, Navbar, Nav, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyNav = () => {
+  const navigate = useNavigate();
+
+  const [search, setSearch] = useState("");
+
   return (
-    <Navbar expand="md" className="bg-light py-0">
+    <Navbar expand="md" className="bg-light py-0 sticky-top top-0">
       <Container fluid>
         <Link to={"/"} className="w-25 navbar-brand fw-bold">
           <img
@@ -27,10 +32,13 @@ const MyNav = () => {
                 type="text"
                 placeholder="Cerca la città..."
                 className="mr-sm-2 py-0 text-black-50 border-0 search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
               <Button
                 type="submit"
                 className="py-0 btn-sm bg-transparent border-secondary text-black searchBtn"
+                onClick={() => navigate("/cityWeather/" + search)}
               >
                 <i className="bi bi-search"></i>
               </Button>

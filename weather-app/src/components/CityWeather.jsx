@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Col, Container, Row, ListGroup } from "react-bootstrap";
 
-const WeatherHome = () => {
+const CityWeather = () => {
+  const param = useParams();
+  console.log("PARAMETRO", param);
+
   const url =
-    "https://api.openweathermap.org/data/2.5/forecast?q=Roma&units=metric&appid=e1f2e9e83e9b22501a7be0bacb2f24d3";
+    "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    param.citySearch +
+    "&units=metric&appid=e1f2e9e83e9b22501a7be0bacb2f24d3";
 
-  const [rome, setRome] = useState({});
+  const [city, setCity] = useState({});
 
-  const GetRome = async () => {
+  const GetCity = async () => {
     try {
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
-        console.log("ECCO ROMA:", data);
-        setRome(data);
+        console.log("ECCO LA CITTA':", data);
+        setCity(data);
       } else {
         throw new Error("Errore nel recupero dei dati");
       }
@@ -23,15 +30,14 @@ const WeatherHome = () => {
   };
 
   useEffect(() => {
-    GetRome();
+    GetCity();
   }, []);
-
   return (
-    <Container fluid className="sfondo">
+    <Container fluid className="sfondoSearch">
       <Row>
         <Col>
           <h1 className="display-1 fw-bold m-5 text-white titleShadow text-uppercase ">
-            {rome.city ? rome.city.name : "undefined"}
+            {city.city ? city.city.name : "undefined"}
           </h1>
         </Col>
       </Row>
@@ -41,20 +47,20 @@ const WeatherHome = () => {
             <u>Current Weather</u>:
           </h3>
           <h3 className="text-white fw-bolder textShadow text-uppercase">
-            {rome.list &&
-            rome.list[0] &&
-            rome.list[0].weather &&
-            rome.list[0].weather[0]
-              ? rome.list[0].weather[0].main
+            {city.list &&
+            city.list[0] &&
+            city.list[0].weather &&
+            city.list[0].weather[0]
+              ? city.list[0].weather[0].main
               : "undefined"}
           </h3>
           <img
             src={
-              rome.list &&
-              rome.list[0] &&
-              rome.list[0].weather &&
-              rome.list[0].weather[0]
-                ? `https://openweathermap.org/img/wn/${rome.list[0].weather[0].icon}@2x.png`
+              city.list &&
+              city.list[0] &&
+              city.list[0].weather &&
+              city.list[0].weather[0]
+                ? `https://openweathermap.org/img/wn/${city.list[0].weather[0].icon}@2x.png`
                 : "#"
             }
             alt="Weather icon"
@@ -74,27 +80,27 @@ const WeatherHome = () => {
                 <u>Ore 00:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[4] &&
-                rome.list[4].weather &&
-                rome.list[4].weather[0]
-                  ? rome.list[4].weather[0].description
+                {city.list &&
+                city.list[4] &&
+                city.list[4].weather &&
+                city.list[4].weather[0]
+                  ? city.list[4].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[4] &&
-                    rome.list[4].weather &&
-                    rome.list[4].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[4].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[4] &&
+                    city.list[4].weather &&
+                    city.list[4].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[4].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[4] && rome.list[4].main
-                  ? rome.list[4].main.temp + "°"
+                {city.list && city.list[4] && city.list[4].main
+                  ? city.list[4].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -103,27 +109,27 @@ const WeatherHome = () => {
                 <u>Ore 03:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[5] &&
-                rome.list[5].weather &&
-                rome.list[5].weather[0]
-                  ? rome.list[5].weather[0].description
+                {city.list &&
+                city.list[5] &&
+                city.list[5].weather &&
+                city.list[5].weather[0]
+                  ? city.list[5].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[5] &&
-                    rome.list[5].weather &&
-                    rome.list[5].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[5].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[5] &&
+                    city.list[5].weather &&
+                    city.list[5].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[5].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[5] && rome.list[5].main
-                  ? rome.list[5].main.temp + "°"
+                {city.list && city.list[5] && city.list[5].main
+                  ? city.list[5].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -132,27 +138,27 @@ const WeatherHome = () => {
                 <u>Ore 06:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[6] &&
-                rome.list[6].weather &&
-                rome.list[6].weather[0]
-                  ? rome.list[6].weather[0].description
+                {city.list &&
+                city.list[6] &&
+                city.list[6].weather &&
+                city.list[6].weather[0]
+                  ? city.list[6].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[6] &&
-                    rome.list[6].weather &&
-                    rome.list[6].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[6].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[6] &&
+                    city.list[6].weather &&
+                    city.list[6].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[6].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[6] && rome.list[6].main
-                  ? rome.list[6].main.temp + "°"
+                {city.list && city.list[6] && city.list[6].main
+                  ? city.list[6].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -161,27 +167,27 @@ const WeatherHome = () => {
                 <u>Ore 12:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[7] &&
-                rome.list[7].weather &&
-                rome.list[7].weather[0]
-                  ? rome.list[7].weather[0].description
+                {city.list &&
+                city.list[7] &&
+                city.list[7].weather &&
+                city.list[7].weather[0]
+                  ? city.list[7].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[7] &&
-                    rome.list[7].weather &&
-                    rome.list[7].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[7].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[7] &&
+                    city.list[7].weather &&
+                    city.list[7].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[7].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[7] && rome.list[7].main
-                  ? rome.list[7].main.temp + "°"
+                {city.list && city.list[7] && city.list[7].main
+                  ? city.list[7].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -190,27 +196,27 @@ const WeatherHome = () => {
                 <u>Ore 15:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[8] &&
-                rome.list[8].weather &&
-                rome.list[8].weather[0]
-                  ? rome.list[8].weather[0].description
+                {city.list &&
+                city.list[8] &&
+                city.list[8].weather &&
+                city.list[8].weather[0]
+                  ? city.list[8].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[8] &&
-                    rome.list[8].weather &&
-                    rome.list[8].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[8].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[8] &&
+                    city.list[8].weather &&
+                    city.list[8].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[8].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[8] && rome.list[8].main
-                  ? rome.list[8].main.temp + "°"
+                {city.list && city.list[8] && city.list[8].main
+                  ? city.list[8].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -219,27 +225,27 @@ const WeatherHome = () => {
                 <u>Ore 18:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[9] &&
-                rome.list[9].weather &&
-                rome.list[9].weather[0]
-                  ? rome.list[9].weather[0].description
+                {city.list &&
+                city.list[9] &&
+                city.list[9].weather &&
+                city.list[9].weather[0]
+                  ? city.list[9].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[9] &&
-                    rome.list[9].weather &&
-                    rome.list[9].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[9].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[9] &&
+                    city.list[9].weather &&
+                    city.list[9].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[9].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[9] && rome.list[9].main
-                  ? rome.list[9].main.temp + "°"
+                {city.list && city.list[9] && city.list[9].main
+                  ? city.list[9].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -248,27 +254,27 @@ const WeatherHome = () => {
                 <u>Ore 21:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[10] &&
-                rome.list[10].weather &&
-                rome.list[10].weather[0]
-                  ? rome.list[10].weather[0].description
+                {city.list &&
+                city.list[10] &&
+                city.list[10].weather &&
+                city.list[10].weather[0]
+                  ? city.list[10].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[10] &&
-                    rome.list[10].weather &&
-                    rome.list[10].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[10].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[10] &&
+                    city.list[10].weather &&
+                    city.list[10].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[10].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[10] && rome.list[10].main
-                  ? rome.list[10].main.temp + "°"
+                {city.list && city.list[10] && city.list[10].main
+                  ? city.list[10].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -285,27 +291,27 @@ const WeatherHome = () => {
                 <u>Ore 00:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[11] &&
-                rome.list[11].weather &&
-                rome.list[11].weather[0]
-                  ? rome.list[11].weather[0].description
+                {city.list &&
+                city.list[11] &&
+                city.list[11].weather &&
+                city.list[11].weather[0]
+                  ? city.list[11].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[11] &&
-                    rome.list[11].weather &&
-                    rome.list[11].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[11].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[11] &&
+                    city.list[11].weather &&
+                    city.list[11].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[11].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[11] && rome.list[11].main
-                  ? rome.list[11].main.temp + "°"
+                {city.list && city.list[11] && city.list[11].main
+                  ? city.list[11].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -314,27 +320,27 @@ const WeatherHome = () => {
                 <u>Ore 03:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[12] &&
-                rome.list[12].weather &&
-                rome.list[12].weather[0]
-                  ? rome.list[12].weather[0].description
+                {city.list &&
+                city.list[12] &&
+                city.list[12].weather &&
+                city.list[12].weather[0]
+                  ? city.list[12].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[12] &&
-                    rome.list[12].weather &&
-                    rome.list[12].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[12].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[12] &&
+                    city.list[12].weather &&
+                    city.list[12].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[12].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[12] && rome.list[12].main
-                  ? rome.list[12].main.temp + "°"
+                {city.list && city.list[12] && city.list[12].main
+                  ? city.list[12].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -343,27 +349,27 @@ const WeatherHome = () => {
                 <u>Ore 06:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[13] &&
-                rome.list[13].weather &&
-                rome.list[13].weather[0]
-                  ? rome.list[13].weather[0].description
+                {city.list &&
+                city.list[13] &&
+                city.list[13].weather &&
+                city.list[13].weather[0]
+                  ? city.list[13].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[13] &&
-                    rome.list[13].weather &&
-                    rome.list[13].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[13].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[13] &&
+                    city.list[13].weather &&
+                    city.list[13].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[13].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[13] && rome.list[13].main
-                  ? rome.list[13].main.temp + "°"
+                {city.list && city.list[13] && city.list[13].main
+                  ? city.list[13].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -372,27 +378,27 @@ const WeatherHome = () => {
                 <u>Ore 12:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[14] &&
-                rome.list[14].weather &&
-                rome.list[14].weather[0]
-                  ? rome.list[14].weather[0].description
+                {city.list &&
+                city.list[14] &&
+                city.list[14].weather &&
+                city.list[14].weather[0]
+                  ? city.list[14].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[14] &&
-                    rome.list[14].weather &&
-                    rome.list[14].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[14].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[14] &&
+                    city.list[14].weather &&
+                    city.list[14].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[14].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[14] && rome.list[14].main
-                  ? rome.list[14].main.temp + "°"
+                {city.list && city.list[14] && city.list[14].main
+                  ? city.list[14].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -401,27 +407,27 @@ const WeatherHome = () => {
                 <u>Ore 15:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[15] &&
-                rome.list[15].weather &&
-                rome.list[15].weather[0]
-                  ? rome.list[15].weather[0].description
+                {city.list &&
+                city.list[15] &&
+                city.list[15].weather &&
+                city.list[15].weather[0]
+                  ? city.list[15].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[15] &&
-                    rome.list[15].weather &&
-                    rome.list[15].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[15].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[15] &&
+                    city.list[15].weather &&
+                    city.list[15].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[15].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[15] && rome.list[15].main
-                  ? rome.list[15].main.temp + "°"
+                {city.list && city.list[15] && city.list[15].main
+                  ? city.list[15].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -430,27 +436,27 @@ const WeatherHome = () => {
                 <u>Ore 18:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[16] &&
-                rome.list[16].weather &&
-                rome.list[16].weather[0]
-                  ? rome.list[16].weather[0].description
+                {city.list &&
+                city.list[16] &&
+                city.list[16].weather &&
+                city.list[16].weather[0]
+                  ? city.list[16].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[16] &&
-                    rome.list[16].weather &&
-                    rome.list[16].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[16].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[16] &&
+                    city.list[16].weather &&
+                    city.list[16].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[16].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[16] && rome.list[16].main
-                  ? rome.list[16].main.temp + "°"
+                {city.list && city.list[16] && city.list[16].main
+                  ? city.list[16].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -459,27 +465,27 @@ const WeatherHome = () => {
                 <u>Ore 21:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[17] &&
-                rome.list[17].weather &&
-                rome.list[17].weather[0]
-                  ? rome.list[17].weather[0].description
+                {city.list &&
+                city.list[17] &&
+                city.list[17].weather &&
+                city.list[17].weather[0]
+                  ? city.list[17].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[17] &&
-                    rome.list[17].weather &&
-                    rome.list[17].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[17].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[17] &&
+                    city.list[17].weather &&
+                    city.list[17].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[17].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[17] && rome.list[17].main
-                  ? rome.list[17].main.temp + "°"
+                {city.list && city.list[17] && city.list[17].main
+                  ? city.list[17].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -496,27 +502,27 @@ const WeatherHome = () => {
                 <u>Ore 00:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[18] &&
-                rome.list[18].weather &&
-                rome.list[18].weather[0]
-                  ? rome.list[18].weather[0].description
+                {city.list &&
+                city.list[18] &&
+                city.list[18].weather &&
+                city.list[18].weather[0]
+                  ? city.list[18].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[18] &&
-                    rome.list[18].weather &&
-                    rome.list[18].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[18].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[18] &&
+                    city.list[18].weather &&
+                    city.list[18].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[18].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[18] && rome.list[18].main
-                  ? rome.list[18].main.temp + "°"
+                {city.list && city.list[18] && city.list[18].main
+                  ? city.list[18].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -525,27 +531,27 @@ const WeatherHome = () => {
                 <u>Ore 03:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[19] &&
-                rome.list[19].weather &&
-                rome.list[19].weather[0]
-                  ? rome.list[19].weather[0].description
+                {city.list &&
+                city.list[19] &&
+                city.list[19].weather &&
+                city.list[19].weather[0]
+                  ? city.list[19].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[19] &&
-                    rome.list[19].weather &&
-                    rome.list[19].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[19].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[19] &&
+                    city.list[19].weather &&
+                    city.list[19].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[19].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[19] && rome.list[19].main
-                  ? rome.list[19].main.temp + "°"
+                {city.list && city.list[19] && city.list[19].main
+                  ? city.list[19].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -554,27 +560,27 @@ const WeatherHome = () => {
                 <u>Ore 06:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[20] &&
-                rome.list[20].weather &&
-                rome.list[20].weather[0]
-                  ? rome.list[20].weather[0].description
+                {city.list &&
+                city.list[20] &&
+                city.list[20].weather &&
+                city.list[20].weather[0]
+                  ? city.list[20].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[20] &&
-                    rome.list[20].weather &&
-                    rome.list[20].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[20].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[20] &&
+                    city.list[20].weather &&
+                    city.list[20].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[20].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[20] && rome.list[20].main
-                  ? rome.list[20].main.temp + "°"
+                {city.list && city.list[20] && city.list[20].main
+                  ? city.list[20].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -583,27 +589,27 @@ const WeatherHome = () => {
                 <u>Ore 12:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[21] &&
-                rome.list[21].weather &&
-                rome.list[21].weather[0]
-                  ? rome.list[21].weather[0].description
+                {city.list &&
+                city.list[21] &&
+                city.list[21].weather &&
+                city.list[21].weather[0]
+                  ? city.list[21].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[21] &&
-                    rome.list[21].weather &&
-                    rome.list[21].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[21].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[21] &&
+                    city.list[21].weather &&
+                    city.list[21].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[21].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[21] && rome.list[21].main
-                  ? rome.list[21].main.temp + "°"
+                {city.list && city.list[21] && city.list[21].main
+                  ? city.list[21].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -612,27 +618,27 @@ const WeatherHome = () => {
                 <u>Ore 15:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[22] &&
-                rome.list[22].weather &&
-                rome.list[22].weather[0]
-                  ? rome.list[22].weather[0].description
+                {city.list &&
+                city.list[22] &&
+                city.list[22].weather &&
+                city.list[22].weather[0]
+                  ? city.list[22].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[22] &&
-                    rome.list[22].weather &&
-                    rome.list[22].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[22].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[22] &&
+                    city.list[22].weather &&
+                    city.list[22].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[22].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[22] && rome.list[22].main
-                  ? rome.list[22].main.temp + "°"
+                {city.list && city.list[22] && city.list[22].main
+                  ? city.list[22].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -641,27 +647,27 @@ const WeatherHome = () => {
                 <u>Ore 18:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[23] &&
-                rome.list[23].weather &&
-                rome.list[23].weather[0]
-                  ? rome.list[23].weather[0].description
+                {city.list &&
+                city.list[23] &&
+                city.list[23].weather &&
+                city.list[23].weather[0]
+                  ? city.list[23].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[23] &&
-                    rome.list[23].weather &&
-                    rome.list[23].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[23].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[23] &&
+                    city.list[23].weather &&
+                    city.list[23].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[23].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[23] && rome.list[23].main
-                  ? rome.list[23].main.temp + "°"
+                {city.list && city.list[23] && city.list[23].main
+                  ? city.list[23].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -670,27 +676,27 @@ const WeatherHome = () => {
                 <u>Ore 21:00:</u>
               </p>{" "}
               <p className="text-uppercase m-0 p-0">
-                {rome.list &&
-                rome.list[24] &&
-                rome.list[24].weather &&
-                rome.list[24].weather[0]
-                  ? rome.list[24].weather[0].description
+                {city.list &&
+                city.list[24] &&
+                city.list[24].weather &&
+                city.list[24].weather[0]
+                  ? city.list[24].weather[0].description
                   : "undefined"}
                 <img
                   src={
-                    rome.list &&
-                    rome.list[24] &&
-                    rome.list[24].weather &&
-                    rome.list[24].weather[0]
-                      ? `https://openweathermap.org/img/wn/${rome.list[24].weather[0].icon}@2x.png`
+                    city.list &&
+                    city.list[24] &&
+                    city.list[24].weather &&
+                    city.list[24].weather[0]
+                      ? `https://openweathermap.org/img/wn/${city.list[24].weather[0].icon}@2x.png`
                       : "#"
                   }
                   className="iconss"
                 />
               </p>
               <p>
-                {rome.list && rome.list[24] && rome.list[24].main
-                  ? rome.list[24].main.temp + "°"
+                {city.list && city.list[24] && city.list[24].main
+                  ? city.list[24].main.temp + "°"
                   : "undefined"}
               </p>
             </ListGroup.Item>
@@ -701,4 +707,4 @@ const WeatherHome = () => {
   );
 };
 
-export default WeatherHome;
+export default CityWeather;
