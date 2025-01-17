@@ -20,57 +20,39 @@ const MyFooter = () => {
         </div>
 
         <div className="row">
-          <div className="col-md-3">
-            <p>Shop</p>
-          </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
             <p>Chi Siamo</p>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
             <p>Help Center</p>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
             <p>Contatti</p>
           </div>
         </div>
 
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-4">
             <p>FAQ</p>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
             <p>Area Personale</p>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
             <p>Luoghi Recenti</p>
           </div>
-          <div className="col-md-3">
-            <p>Corporate Information</p>
-          </div>
         </div>
 
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-4">
             <p>Privacy</p>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
             <p>Legal Notices</p>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
             <p>Cookie Preferences</p>
           </div>
-          <div className="col-md-3">
-            <p>Terms of Use</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-3">
-            <p>Contact Us</p>
-          </div>
-          <div className="col-md-3"></div>
-          <div className="col-md-3"></div>
-          <div className="col-md-3"></div>
         </div>
       </div>
     </footer>

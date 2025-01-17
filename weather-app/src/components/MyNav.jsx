@@ -28,6 +28,12 @@ const MyNav = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch(); // Chiamata della funzione quando premi 'Enter'
+    }
+  };
+
   return (
     <Navbar expand="md" className="bg-light py-0 sticky-top top-0">
       <Container fluid>
@@ -55,6 +61,7 @@ const MyNav = () => {
                 className="mr-sm-2 py-0 text-black-50 border-0 search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
               <Button
                 type="submit"
