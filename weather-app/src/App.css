@@ -1,11 +1,6 @@
-body {
-  height: 100vh;
-}
-
 .sfondo {
   background-image: url(https://static.vecteezy.com/system/resources/previews/017/750/216/non_2x/colosseum-or-coliseum-background-blue-sky-in-rome-italy-photo.jpg);
   background-size: cover;
-  height: 90vh;
 }
 
 .titleShadow {
@@ -14,4 +9,8 @@ body {
 
 .textShadow {
   text-shadow: 2px 2px 7px #000000;
+}
+
+.iconss {
+  width: 50px;
 }
