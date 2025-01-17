@@ -7,6 +7,13 @@ const MyNav = () => {
 
   const [search, setSearch] = useState("");
 
+  const handleSearch = () => {
+    if (search !== "") {
+      navigate("/cityWeather/" + search);
+      setSearch("");
+    }
+  };
+
   return (
     <Navbar expand="md" className="bg-light py-0 sticky-top top-0">
       <Container fluid>
@@ -38,7 +45,7 @@ const MyNav = () => {
               <Button
                 type="submit"
                 className="py-0 btn-sm bg-transparent border-secondary text-black searchBtn"
-                onClick={() => navigate("/cityWeather/" + search)}
+                onClick={() => handleSearch()}
               >
                 <i className="bi bi-search"></i>
               </Button>
